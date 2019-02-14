@@ -1,0 +1,22 @@
+(deffacts question-data
+   "The questions the system can ask."
+
+   (question (ident orbit-altitude#) (type number) 
+      (text "What is the altitude of the orbit? (in km)"))
+   (question (ident orbit-type) (type word) 
+      (text "What is the satellite's type of orbit?"))
+   (question (ident orbit-RAAN) (type word) 
+      (text "What is the longitude of the ascending node (RAAN) of the orbit?"))
+   (question (ident orbit-inclination) (type number) 
+      (text "What is the inclination of the orbit?"))
+   (question (ident orbit-eccentricity) (type number) 
+      (text "What is the eccentricity of the orbit?"))
+   (question (ident planet) (type word) 
+      (text "Which planet does your satellite orbit? [first letter must be capital (i.e. Mars)] >"))
+   (question (ident launcher) (type word) 
+      (text "Which rocket will launch the satellite? "))
+   (question (ident satellite-dimensions) (type word) 
+      (text "What are the dimensions of the satellite? [x,y, height]"))
+   (question (ident satellite-wet-mass) (type word) 
+      (text "What is the mass of the satellite at launch? "))
+   )

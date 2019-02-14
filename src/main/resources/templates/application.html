@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Satellite Design Assistant</title>
+	<link rel="stylesheet" type="text/css" href="/bootstrap-3.3.7-dist/css/bootstrap.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="/web.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+ <body>
+    <div class="container" id="titleContainer">
+	<div class="row">
+		<div class="col-lg-12">
+			<!-- we create this div to style verything inside-->
+			<div id="title">
+				<p>Satellite Design Assistant - SEAKERS Lab</p>
+			</div>
+		</div>
+	</div>
+    </div>
+
+	<div class="container" id="inputContainer">
+	<p id="myDesign">Tell me about your design</p>
+	<div class="row" id="tools">
+		<div class="col-lg-12 col-md-12 col-xs-12 form-group">
+			    <form th:action="@{/inputText}" th:object="${input}" method="POST">
+			      <div class="input-group">
+			      <input class="form-control" placeholder="Try to be simple and concise in the description (e.g. The orbit has an altitude of 600 km.)" 
+			      id="input_text" th:field="*{text}" >
+			   		<span class="input-group-btn">
+				  <input type="submit" class="btn btn-primary" value="Submit Text">
+			   		</span>
+			      </div>
+			    </form>
+			    <p th:if="${input.messageList[0] != null}" style="margin-top: 5px"><strong>Message: </strong></p>
+			    <th:block th:each="message : ${input.messageList}">
+			    	<p><span th:inline="text">[[${message}]]</span></p>
+			    </th:block>
+		</div>
+	</div>
+	<p id="myDesign"> or upload a XLS/PDF file</p>
+	<div class="row" id="tools">
+		<div class="child col-lg-4 col-md-4 col-xs-4">
+			<form th:action="@{/import}" method="post" enctype="multipart/form-data">
+		    		<div class="form-group">
+						<div class="input-group input-file" name="file">
+							<span class="input-group-btn">
+				        		<button class="btn btn-default btn-choose" type="button">Browse</button>
+				    		</span>
+				    		<input type="text" class="form-control" placeholder='Upload XLS/PDF file...' />
+				    		<span class="input-group-btn">
+				       			 <button class="btn btn-primary " type="submit">
+				       			 <span class="glyphicon glyphicon-upload"></span>
+				       			 Upload</button>
+				    		</span>
+						</div>
+					</div>
+		    </form>
+		</div>
+		<div class="child">
+			<form th:action="@{/downloadFile}" method="GET">
+				<button type="submit" class="btn btn-primary" style="margin-bottom: 15px">
+				<span class="glyphicon glyphicon-download"></span>
+				<span>Download XLS Template</span>
+		</form>
+		</div>
+	</div>
+	</div>
+
+	
+<div class="container" id="dashboard">
+
+	<p id="myDesign">Edit your parameters</p>
+
+	<div class="row" id="tools">
+		<div class="child">
+			<form th:action="@{/clear}" method="GET">
+				<button type="submit" class="btn btn-primary" style="margin-bottom: 15px">
+				<span class="glyphicon glyphicon-erase"></span>
+				<span>Clear all</span>
+			</form>
+		</div>
+			<div class="child col-lg-4 col-md-4 col-xs-4">
+			<form action="/evaluate" method="POST">
+				<div class="input-group">
+					<div class="input-group-btn">
+							<button  class="btn btn-primary" type="submit">Evaluate Design</button>
+							<button  data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+								<span class="caret"></span>
+							</button>
+							<ul role="menu" class="dropdown-menu">
+								<input type="hidden" name ="subCheck" value=""/>
+								<li><a href="#">
+								<input type="checkbox" value="evaluateAll" id="evaluateAll"><span class="lbl">Evaluate All</span>
+								</a></li>
+								<li class="divider"></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="launcher"><span class="lbl">Launcher</span>
+								</a></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="power"><span class="lbl">Power</span>
+								</a></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="adcs"><span class="lbl">ADCS</span>
+								</a></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="propulsion"><span class="lbl">Propulsion</span>
+								</a></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="comms"><span class="lbl">Comms</span>
+								</a></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="thermal"><span class="lbl">Thermal</span>
+								</a></li>
+								<li><a href="#">
+								<input type="checkbox" name ="subCheck" value="structure"><span class="lbl">Structure</span>
+								</a></li>
+							</ul>
+						</div>
+						<input type="text" class="form-control" id="subsystems" readonly>
+					</div>
+			</form>
+		</div>
+		
+	</div>		
+	
+<form action="#" th:action="@{/submit}" th:object="${wrapper}" method="POST">
+
+	<div class="col-lg-12 col-md-12 col-xs-12 text-left">
+		<button type="submit" class="btn btn-success" style="margin-bottom: 15px">
+		<span class="glyphicon glyphicon-save"></span>
+		<span>Save Data</span>
+		</button>
+	</div>
+
+	<th:block th:each="currentForm, ord : *{formList}">
+	<div class="col-lg-4 col-md-6 col-xs-12">
+		<div class="thumbnail">
+	    	<h3 th:text="*{formList[__${ord.index}__].subsystemName.toUpperCase()}"></h3>
+	    	
+		    	<th:block th:each="el , stat : ${currentForm.paramList}">
+						<div class="input-group">
+							<span class="input-group-addon" 
+							th:inline="text">[[${el.getEntityName()}]] [[${el.getUnit()}]] :  
+									<strong>[[${el.getValue()}]]</strong>
+							</span>
+							<input class="form-control" 
+							type="text"
+							th:name="${__${el.getId()}__}"
+							th:field="*{formList[__${ord.index}__].paramList[__${stat.index}__].value}"/>
+							<input type="hidden" th:field="*{formList[__${ord.index}__].subsystemName}"/>
+							<input type="hidden" th:field="*{formList[__${ord.index}__].paramList[__${stat.index}__].id}"/>
+							<input type="hidden" th:field="*{formList[__${ord.index}__].paramList[__${stat.index}__].entityName}"/>
+						</div>
+				</th:block>
+		</div>
+	</div>
+	</th:block>
+</form>
+</div>
+
+	<div class="container" id="titleContainer">
+	<div class="row">
+		<div class="col-lg-12">
+			<div id="footer">
+				<p>Thesis Project - by Sergio Escosa Rodríguez</p>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/1.0.0/speechkitt.min.js"></script>
+	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>	
+	<script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap.js"></script>		
+	<script type="text/javascript" th:src="@{/web.js}"></script>
+	
+	<div id="skitt-ui" class="skitt-ui--not-listening" style="display: none;">
+		<a id="skitt-toggle-button">&nbsp;</a><label for="skitt-toggle-button" id="skitt-toggle-button__label">Activate Voice Control</label>
+		<div id="skitt-listening-box">
+			<div id="skitt-listening-text"><span id="skitt-listening-text__instructions">Tell me about your design</span>
+			</div>
+		</div>
+	</div>
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css" id="skitt-style-sheet">
+	
+    </body>
+</html>

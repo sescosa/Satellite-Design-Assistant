@@ -1,0 +1,23 @@
+(defmodule TCS)
+
+(deffunction run-system ()
+	(focus TCS)
+	(run))
+
+(defglobal ?*error* = 10)
+(defglobal ?*planet* = "")
+(defglobal ?*grav-param* = 2)
+(defglobal ?*planet-radius* = 6378)
+
+(batch satModel/thermal/clp/templates.clp)
+(batch satModel/thermal/clp/questions-data.clp)
+(reset)
+(batch satModel/thermal/clp/jess_functions.clp)
+(batch satModel/thermal/clp/thermal_design_rules.clp)
+(batch satModel/thermal/clp/orbit_rules.clp)
+(batch satModel/thermal/clp/checker_rulesv2.clp)
+;;(batch satModel/thermal/clp/report.clp)
+(batch satModel/thermal/clp/read_attributes.clp)
+(batch satModel/thermal/clp/interview.clp)
+(batch satModel/thermal/clp/ask-question.clp)
+;;(batch TCS/clp/startup.clp)

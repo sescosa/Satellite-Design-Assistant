@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Satellite Design Assistant</title>
+	<link rel="stylesheet" type="text/css" href="/bootstrap-3.3.7-dist/css/bootstrap.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="/web.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+ <body>
+    <div class="container" id="titleContainer">
+	<div class="row">
+		<div class="col-lg-12">
+			<!-- we create this div to style verything inside-->
+			<div id="title">
+				<p>Satellite Design Assistant - Report</p>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+	<div class="container" id="inputContainer">
+
+		<form action="#" th:object="${wrapper}">	
+			<th:block th:each="currentSubs, ord : *{subsReport}">
+				<div>
+					<p id="myDesign" th:text="*{subsReport[__${ord.index}__].subsystem.toUpperCase()}"></p>
+					<th:block th:each="currentRec, stat : ${currentSubs.recList}">
+						<p class="explanation">
+							<span th:if="${currentRec.descriptor == 'pos'}" class="glyphicon glyphicon-ok pos"></span>
+							<span th:if="${currentRec.descriptor == 'neg'}" class="glyphicon glyphicon-remove neg"></span>
+							<span th:if="${currentRec.descriptor == 'neutral'}" class="glyphicon glyphicon-list-alt neutral"></span>
+							<span  th:text="*{subsReport[__${ord.index}__].recList[__${stat.index}__].explanation}"></span>
+						</p>
+					</th:block>
+				</div>
+			</th:block>
+		</form>
+	
+	</div>
+	
+	
+	<footer id="titleContainer">
+		<div class="row">
+			<div class="col-lg-12">
+				<div id="footer">
+					<p>Thesis Project - by Sergio Escosa Rodríguez</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+		
+		<script src="webjars/jquery/1.9.1/jquery.min.js"></script>	
+		<script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap.js"></script>		
+		<script type="text/javascript" th:src="@{/web.js}"></script>
+		
+    </body>
+</html>
