@@ -113,15 +113,15 @@ Pcr_s = sigma_cr_s * A_s;
 %Margin of safety
 MS = Pcr_s/UltimateLoad -1; % if MS < 0, increase thickness
 t_s = tacoustic;
-    while MS < 0
-        disp(t_s);
-        t_new_s = t_s + 5e-5; %increase panel thickness
-        sigma_cr_s = k_panel*pi^2*E/(12*(1-v^2))*(t_new_s/b)^2;
-        Astringer = 1/12*(A_s -  2*pi*(D/2)*t_new_s); % decrease stringer area to maintain total area
-        Pcr_s = sigma_cr_s * A_s;
-        MS = Pcr_s/UltimateLoad -1; % if MS < 0, increase thickness
-        t_s = t_new_s;
-    end
+while MS < 0
+    disp(t_s);
+    t_new_s = t_s + 5e-5; %increase panel thickness
+    sigma_cr_s = k_panel*pi^2*E/(12*(1-v^2))*(t_new_s/b)^2;
+    Astringer = 1/12*(A_s -  2*pi*(D/2)*t_new_s); % decrease stringer area to maintain total area
+    Pcr_s = sigma_cr_s * A_s;
+    MS = Pcr_s/UltimateLoad -1; % if MS < 0, increase thickness
+    t_s = t_new_s;
+end
 
 mass_stringers = A_s*L*rho*1.25; %extra 25% for ring frames and fasteners
 else 

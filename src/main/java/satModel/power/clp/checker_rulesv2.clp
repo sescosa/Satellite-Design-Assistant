@@ -18,36 +18,54 @@
 	=>
 	(assert (checker (battery-check (check-attribute ?bat-calculated ?bat-check))))
 )
+
+(defrule mass-check
+	(Mission-designed (EPS-mass# ?m&~nil))
+	(Mission-check (EPS-mass# ?mcheck&~nil))
+	=>
+	(assert (checker (mass-check (check-attribute ?m ?mcheck))))
+)
 ;*****************************************************************************************
 ;; The next 6 rules assert a recommendation depending on the result of the comparation ;;
 ;*****************************************************************************************
+(defrule mass-small
+	(checker (mass-check ?i&:(eq ?i -1)))
+
+	(Mission-designed (EPS-mass# ?mass&~nil) (worst-sun-angle ?w&~nil))
+	(Mission-check (EPS-mass# ?mass-check&~nil))
+
+	=>
+    (assert (recommend (correction neg) (explanation (str-cat "Electrical power subsystem mass is too small. You should re-evaluate the mass. My calculations show the aproximate mass should be " (round ?mass) " kg. Your calcuations show the mass of the system is " ?mass-check " kg. Maybe you didn't consider the mass of other components such as the converter, control unit or wiring"))))
+
+)
+
+(defrule mass-big
+	(checker (mass-check ?i&:(eq ?i 1)))
+
+	(Mission-designed (EPS-mass# ?mass-calculated&~nil) (worst-sun-angle ?w&~nil))
+	(Mission-check (EPS-mass# ?mass-check&~nil))
+	=>
+	(assert (recommend (correction neg) (explanation (str-cat "Electrical power subsystem mass is too big, you might be able to optimize it better. With " (round ?mass-calculated) " kg might be enough. Your actual thermal control mass is of: " ?mass-check " kg."))))
+)
+
+(defrule mass-ok
+	(checker (mass-check ?i&:(eq ?i 0)))
+	(Mission-designed (EPS-mass# ?mass-calculated&~nil) (worst-sun-angle ?w&~nil))
+	=>
+	(assert (recommend (correction pos) (explanation (str-cat "EPS mass is inside the range calculated. Within an error of +/- " ?*error* " %"))))
+)
+
 
 (defrule battery-small
 	(checker (battery-check ?i&:(eq ?i -1)))
 
-	(Mission-check (payload-power# ?p&~nil) (payload-peak-power# ?pe&~nil) (depth-of-discharge ?dod&~nil) 
-	(orbit-semimajor-axis ?a&~nil) (worst-sun-angle ?angle&~nil) (fraction-sunlight ?frac&~nil) 
-	(satellite-dry-mass ?m&~nil) (lifetime ?life&~nil) (solar-cell-type ?sa&~nil) (battery-type ?bat&~nil) (battery-mass ?bat_mass&~nil) (solar-array-area ?Asa&~nil))
+	(Mission-check (battery-type ?bat&~nil))
+	(Mission-designed (battery-mass ?bat-calculated&~nil))
 
 	(batteries (name ?bat) (n ?n&~nil) (Spec_energy_density_batt ?spec_bat&~nil))
-    (solar-cells (name ?sa) (Xe ?Xe&~nil) (Xd ?Xd&~nil) (P0 ?p0&~nil) (Id ?Id&~nil) (degradation ?degr&~nil) (Spec_power_SA ?spec_sa&~nil))
 	=>
-	(bind ?symbVar (create$ Asa spec_energy_density_batt))
-    (bind ?matlabFile "power_design")
-    (bind ?outputVars (create$ spec_energy_density_batt))
 
-    ;; List with input names
-    (bind ?key-list (create$ Pavg_payload Ppeak_payload frac_sunlight worst_sun_angle period lifetime dry_mass DOD Xe Xd P0 Id degradation spec_power_sa n mass_batt))
-
-    ;; List with input values
-    (bind ?element-list (create$ ?p ?pe ?frac ?angle (orbit-period ?a) ?life ?m ?dod ?Xe ?Xd ?p0 ?Id ?degr ?spec_sa ?n ?bat_mass))
-
-    (bind ?input-hmap (hashmap ?element-list ?key-list))
-
-    (bind ?output (matlabf ?input-hmap ?symbVar ?matlabFile ?outputVars))
-
-
-    (assert (recommend (correction neg) (explanation (str-cat "Battery is too small, it won't be able to power the payload during eclipse. With this battery mass you would need a battery type with a specific energy density of: " (round (nth$ 1 ?output)) " W hr/kg. Your actual specific energy density is of: " ?spec_bat " W hr/kg."))))
+    (assert (recommend (correction neg) (explanation (str-cat "Battery is too small, it won't be able to power the payload during eclipse. I have found that you need a battery of " (round ?bat-calculated)" kg. With this battery mass you would need a battery type with a higher specific energy density. Your actual specific energy density is of: " ?spec_bat " W hr/kg."))))
 
 )
 
@@ -69,29 +87,13 @@
 (defrule solar-array-small
 	(checker (solar-array-area-check ?i&:(eq ?i -1)))
 
-	(Mission-check (payload-power# ?p&~nil) (payload-peak-power# ?pe&~nil) (depth-of-discharge ?dod&~nil) 
-	(orbit-semimajor-axis ?a&~nil) (worst-sun-angle ?angle&~nil) (fraction-sunlight ?frac&~nil) 
-	(satellite-dry-mass ?m&~nil) (lifetime ?life&~nil) (solar-cell-type ?sa&~nil) (battery-type ?bat&~nil) (battery-mass ?bat_mass&~nil) (solar-array-area ?Asa&~nil) (solar-array-mass ?saMass&~nil))
+	(Mission-check (solar-cell-type ?sa&~nil))
+	(Mission-designed (solar-array-area ?Asa&~nil) (solar-array-mass ?saMass&~nil))
 
-	(batteries (name ?bat) (n ?n&~nil) (Spec_energy_density_batt ?spec_bat&~nil))
     (solar-cells (name ?sa) (Xe ?Xe&~nil) (Xd ?Xd&~nil) (P0 ?p0&~nil) (Id ?Id&~nil) (degradation ?degr&~nil) (Spec_power_SA ?spec_sa&~nil))
 	=>
-	(bind ?symbVar (create$ P0 spec_energy_density_batt))
-    (bind ?matlabFile "power_design")
-    (bind ?outputVars (create$ P0))
 
-    ;; List with input names
-    (bind ?key-list (create$ Pavg_payload Ppeak_payload frac_sunlight worst_sun_angle period lifetime dry_mass DOD Xe Xd Asa Id degradation spec_power_sa n mass_batt))
-
-    ;; List with input values
-    (bind ?element-list (create$ ?p ?pe ?frac ?angle (orbit-period ?a) ?life ?m ?dod ?Xe ?Xd ?Asa ?Id ?degr ?spec_sa ?n ?bat_mass))
-
-    (bind ?input-hmap (hashmap ?element-list ?key-list))
-
-    (bind ?output (matlabf ?input-hmap ?symbVar ?matlabFile ?outputVars))
-
-
-    (assert (recommend (correction neg) (explanation (str-cat "Solar array is too small, it won't be able to power the payload and the batteries. I have found that you need an area of "?Asa " squared meters, which means " (round ?saMass) " kg of your current solar cells choice. With your current solar array area you would need a solar cell type with an efficiency of: " (round (/ (nth$ 1 ?output) 13.67)) " %. Your are now using a solar cell with an efficiency of: " (round (/ ?p0 13.67)) " %."))))
+    (assert (recommend (correction neg) (explanation (str-cat "Solar array is too small, it won't be able to power the payload and the batteries. I have found that you need an area of " (round ?Asa) " squared meters, which means " (round ?saMass) " kg of your current solar cells choice. With your current solar array area you would need a solar cell type with a higher efficiency. Your are now using a solar cell with an efficiency of: " (round (/ ?p0 13.67)) " %."))))
 )
 
 (defrule solar-array-big

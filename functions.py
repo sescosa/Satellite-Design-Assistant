@@ -50,7 +50,7 @@ def findValueNumerical(doc):
 def findValueNonNumerical(doc):
     values = []
     for token in doc:
-        if token.dep_ == "attr" or token.dep_ == "acomp" or token.dep_=="nummod":
+        if token.dep_ == "attr" or token.dep_ == "acomp" or token.dep_=="nummod" or token.dep_=="pobj":
             values.append(token.text)
     return values
 
@@ -104,7 +104,7 @@ def findAttributeIs(doc):
             subject = token.text
             adj2 = ""
             for child in token.children:
-                if (child.pos_ == "ADJ" or child.pos_ == "NOUN")  and adj == "":
+                if (child.pos_ == "ADJ" or child.pos_ == "NOUN" or child.pos_=="PROPN")  and adj == "":
                     adj = child.text
                 elif (child.pos_ == "ADJ" or child.pos_ == "NOUN") and adj2 == "":
                     adj2 = child.text

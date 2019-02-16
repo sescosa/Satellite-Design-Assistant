@@ -8,7 +8,7 @@ def evalText(raw_text):
 	                  "Satellite Dry Mass","Satellite Wet Mass","Satellite Dimensions","Lifetime","Planet orbiting",
 	                  "Injection to Orbit Propellant","ADCS propellant","Mission type","DeltaV","Propulsion mass",
 	                  "Deorbiting strategy","Payload mean power","Payload peak power","Solar cell type","Battery type","EPS mass",
-	                  "Solar array mass","Battery mass","Accuracy requirement","Moments of inertia","Slew angle",
+	                  "Solar array mass","Solar array area","Battery mass","Accuracy requirement","Moments of inertia","Slew angle",
 	                  "Slew control system","Number of reaction wheels","ADCS mass","ADCS type","Maximum Operational Temperature",
 	                  "Minimum Operational Temperature","TCS type","TCS mass","TCS power",
 	                  "Maximum internal heat","Minimum internal heat","Radiator material","Insulator material",

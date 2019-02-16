@@ -73,7 +73,7 @@
 
 (deftemplate recommend (slot correction) (slot explanation))
 
-(deftemplate checker (slot solar-array-area-check) (slot battery-check))
+(deftemplate checker (slot solar-array-area-check) (slot battery-check) (slot mass-check))
 
 (deftemplate question (slot text) (slot type) (slot ident))
 

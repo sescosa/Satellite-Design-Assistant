@@ -17,7 +17,7 @@
 		<div class="col-lg-12">
 			<!-- we create this div to style verything inside-->
 			<div id="title">
-				<p>Satellite Design Assistant - SEAKERS Lab</p>
+				<p>Satellite Design Assistant - SEAK Lab</p>
 			</div>
 		</div>
 	</div>
@@ -162,7 +162,19 @@
 	</th:block>
 </form>
 </div>
-
+	<div class="container" id="inputContainer" style="margin-bottom: 50px">
+		<p id="myDesign">Maybe you can use some help...</p>
+		<p class="explanation"> <strong>Launchers:</strong> Ariane5 ESCA, Soyuz, Vega, Delta 7320, Delta 7420, Delta 7920, Taurus XL or Minotaur IV. </p>
+		<p class="explanation"> <strong>Propellants:</strong> solid, hydrazine or LH2. </p>
+		<p class="explanation"> <strong>Deorbit strategy:</strong> drag-based or graveyard.</p>
+		<p class="explanation"> <strong>Slew control system:</strong> none, thrusters or two-force-thrusters. </p>
+		<p class="explanation"> <strong>ADCS type:</strong> grav-grad (gravity gradient), spinner or three-axis.</p>
+		<p class="explanation"> <strong>TCS surface materials:</strong> Al, white-paint, black-paint, Si-Teflon, MLI or Al-Kapton </p>
+		<p class="explanation"> <strong>Antenna Type:</strong> Dipole, Patch or Parabolic </p>
+		<p class="explanation"> <strong>Number of ground stations</strong> must be from 1 to 4. </p>
+		<p class="explanation"> <strong>Main structure</strong> can be monocoque or stringers. </p>
+		<p class="explanation"> <strong>Structural materials: </strong> alloys of Aluminium, Steel, Magnesium or Titanium. </p>
+	</div>
 	<div class="container" id="titleContainer">
 	<div class="row">
 		<div class="col-lg-12">
@@ -174,19 +186,14 @@
 	</div>
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/1.0.0/speechkitt.min.js"></script>
+	<script src="//code.responsivevoice.org/responsivevoice.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+	
 	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>	
 	<script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap.js"></script>		
 	<script type="text/javascript" th:src="@{/web.js}"></script>
 	
-	<div id="skitt-ui" class="skitt-ui--not-listening" style="display: none;">
-		<a id="skitt-toggle-button">&nbsp;</a><label for="skitt-toggle-button" id="skitt-toggle-button__label">Activate Voice Control</label>
-		<div id="skitt-listening-box">
-			<div id="skitt-listening-text"><span id="skitt-listening-text__instructions">Tell me about your design</span>
-			</div>
-		</div>
-	</div>
-	
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat.css" id="skitt-style-sheet">
+
 	
     </body>
 </html>

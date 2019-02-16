@@ -102,7 +102,10 @@
 (deftemplate material (slot name) (slot young-module) (slot poisson) (slot density) (slot ultimate-strength) (slot yield-strength))
 
 (deffacts materials
-   (material (name Al7075) (young-module 71e9) (poisson 0.33) (density 2.8e3) (ultimate-strength 524e6) (yield-strength 448e6))
+   (material (name Aluminium) (young-module 71e9) (poisson 0.33) (density 2.8e3) (ultimate-strength 524e6) (yield-strength 448e6))
+   (material (name Steel) (young-module 196e9) (poisson 0.29) (density 7.86e3) (ultimate-strength 860e6) (yield-strength 620e6))
+   (material (name Magnesium) (young-module 45e9) (poisson 0.35) (density 1.77e3) (ultimate-strength 270e6) (yield-strength 165e6))
+   (material (name Titanium) (young-module 110e9) (poisson 0.35) (density 4.43e3) (ultimate-strength 900e6) (yield-strength 855e6))
 )
 
 

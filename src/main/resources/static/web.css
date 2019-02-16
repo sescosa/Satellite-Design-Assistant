@@ -40,6 +40,14 @@
 	margin-bottom:15px;
 }
 
+#help{
+	background-color: rgb(255, 255, 255);
+	background-size: cover;
+	font-family: Lato;
+	color: rgb(0, 0, 0);
+	width: 100%;
+}
+
 #dashboard{
 	background-color: whitesmoke;
 	background-size: cover;

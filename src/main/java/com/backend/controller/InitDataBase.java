@@ -68,8 +68,8 @@ class InitDataBase {
 			repository.save(new Parameter("adcs","ADCS mass",null,"ADCS-mass#","[kg]"));
 			repository.save(new Parameter("adcs","ADCS type",null,"ADCS-type",null));
 			
-			repository.save(new Parameter("thermal","Maximum Operational Temperature",null,"Thot-max","[K]"));
-			repository.save(new Parameter("thermal","Minimum Operational Temperature",null,"Tcold-min","[K]"));
+			repository.save(new Parameter("thermal","Maximum Operational Temperature",null,"Thot-max","[ºC]"));
+			repository.save(new Parameter("thermal","Minimum Operational Temperature",null,"Tcold-min","[ºC]"));
 			repository.save(new Parameter("thermal","TCS type",null,"TCS-type","[active or passive]"));
 			repository.save(new Parameter("thermal","TCS mass",null,"TCS-mass","[kg]"));
 			repository.save(new Parameter("thermal","TCS power",null,"TCS-power","[W]"));
@@ -83,9 +83,9 @@ class InitDataBase {
 			repository.save(new Parameter("comms","Antenna type",null,"antenna-type",null));
 			repository.save(new Parameter("comms","Antenna gain",null,"gain-antenna","[dB]"));
 			repository.save(new Parameter("comms","Transmitted power",null,"trans-power","[W]"));
-			repository.save(new Parameter("comms","Band",null,"Band",null));
+			repository.save(new Parameter("comms","Band",null,"Band","[UHF,Sband,Kaband,Xband]"));
 			repository.save(new Parameter("comms","Number of ground stations",null,"ngs",null));
-			repository.save(new Parameter("comms","Modulation",null,"MOD",null));
+			repository.save(new Parameter("comms","Modulation",null,"MOD","[2,4,8,16]"));
 			repository.save(new Parameter("comms","TTC power",null,"peak-power","[W]"));
 			repository.save(new Parameter("comms","TTC mass",null,"TTC-mass","[kg]"));
 			
@@ -98,8 +98,8 @@ class InitDataBase {
 			repository.save(new Parameter("structure","Lateral natural frequency",null,"NF-lateral","[Hz]"));
 			repository.save(new Parameter("structure","Structural mass",null,"mass-structure","[kg]"));
 			repository.save(new Parameter("structure","Number of solar arrays",null,"number-SA",null));
-			repository.save(new Parameter("structure","Material",null,"material","[Al7075]"));
-			repository.save(new Parameter("structure","Main structure",null,"struc-type","[monocoque or stringers]"));			
+			repository.save(new Parameter("structure","Material",null,"material",null));
+			repository.save(new Parameter("structure","Main structure",null,"struc-type",null));			
 			
 			String[] listPROP = {"orbit-type","orbit-RAAN","orbit-altitude#","orbit-inclination","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","orbit-eccentricity","lifetime","satellite-dry-mass","propellant-injection","propellant-ADCS","delta-V","propulsion-mass#","ADCS-type","payload-power#","satellite-dimensions","deorbiting-strategy","satellite-wet-mass","planet"};
 			String[] listEPS = {"orbit-type","orbit-RAAN","orbit-altitude#","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","payload-power#","payload-peak-power#","lifetime","satellite-dry-mass","depth-of-discharge","EPS-mass#","satellite-EOL-power#","satellite-BOL-power#","solar-array-area","solar-array-mass","battery-capacity","solar-cell-type","battery-type","battery-mass","planet"};
