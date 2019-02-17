@@ -47,6 +47,7 @@ class InitDataBase {
 			
 			repository.save(new Parameter("propulsion","Injection to Orbit Propellant",null,"propellant-injection",null));
 			repository.save(new Parameter("propulsion","ADCS propellant",null,"propellant-ADCS",null));
+			repository.save(new Parameter("propulsion","Propellant mass",null,"propellant-mass","[kg]"));
 			repository.save(new Parameter("propulsion","DeltaV",null,"delta-V","[m/s]"));
 			repository.save(new Parameter("propulsion","Propulsion mass",null,"propulsion-mass#","[kg]"));
 			repository.save(new Parameter("propulsion","Deorbiting strategy",null,"deorbiting-strategy",null));
@@ -101,7 +102,7 @@ class InitDataBase {
 			repository.save(new Parameter("structure","Material",null,"material",null));
 			repository.save(new Parameter("structure","Main structure",null,"struc-type",null));			
 			
-			String[] listPROP = {"orbit-type","orbit-RAAN","orbit-altitude#","orbit-inclination","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","orbit-eccentricity","lifetime","satellite-dry-mass","propellant-injection","propellant-ADCS","delta-V","propulsion-mass#","ADCS-type","payload-power#","satellite-dimensions","deorbiting-strategy","satellite-wet-mass","planet"};
+			String[] listPROP = {"orbit-type","orbit-RAAN","orbit-altitude#","orbit-inclination","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","orbit-eccentricity","lifetime","satellite-dry-mass","propellant-injection","propellant-ADCS","propellant-mass","delta-V","propulsion-mass#","ADCS-type","payload-power#","satellite-dimensions","deorbiting-strategy","satellite-wet-mass","planet"};
 			String[] listEPS = {"orbit-type","orbit-RAAN","orbit-altitude#","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","payload-power#","payload-peak-power#","lifetime","satellite-dry-mass","depth-of-discharge","EPS-mass#","satellite-EOL-power#","satellite-BOL-power#","solar-array-area","solar-array-mass","battery-capacity","solar-cell-type","battery-type","battery-mass","planet"};
 			String[] listADCS = {"orbit-type","orbit-RAAN","orbit-altitude#","orbit-inclination","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","ADCS-requirement","satellite-dry-mass","moments-of-inertia","drag-coefficient","residual-dipole","slew-angle","satellite-dimensions","ADCS-mass#","ADCS-type","slew-control","number-RW","planet"};
 			String[] listTCS = {"orbit-type","orbit-RAAN","orbit-altitude#","orbit-inclination","worst-sun-angle","orbit-period#","fraction-sunlight","orbit-semimajor-axis","orbit-eccentricity","lifetime","satellite-dry-mass","Thot-max","Tcold-min","Qin-max","Qin-min","satellite-dimensions","payload-power#","TCS-type","TCS-mass","TCS-power","radiator-surface","insulator-surface","planet"};

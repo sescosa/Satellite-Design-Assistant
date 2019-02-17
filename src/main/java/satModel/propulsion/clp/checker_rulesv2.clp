@@ -13,9 +13,17 @@
 (defrule propulsion-mass-check
 	(PROP-designed (propulsion-mass# ?massdes&~nil))
 	(PROP-check (propulsion-mass# ?masscheck&~nil))
-	?ch <- (checker (mass-check nil) (dry-check nil) (deorbit-check nil))
+	?ch <- (checker (mass-check nil) )
 	=>
 	(modify ?ch (mass-check (check-attribute ?massdes ?masscheck)))
+)
+
+(defrule propellant-mass-check
+	(PROP-designed (propellant-mass ?massdes&~nil))
+	(PROP-check (propellant-mass ?masscheck&~nil))
+	?ch <- (checker (propellant-check nil))
+	=>
+	(modify ?ch (propellant-check (check-attribute ?massdes ?masscheck)))
 )
 
 (defrule dry-mass-check
@@ -40,7 +48,7 @@
 	(PROP-check (propulsion-mass# ?mass-check&~nil))
 
 	=>
-    (assert (recommend (correction neg) (explanation (str-cat "The propulsion subsystem is too small. You should re-evaluate the mass. My calculations show the aproximate mass should be " (round ?mass) " kg. Your calcuations show the mass of the system is " ?mass-check " kg."))))
+    (assert (recommend (correction neg) (explanation (str-cat "The propulsion subsystem dry mass is too small. You should re-evaluate the mass. My calculations show the aproximate mass should be " (round ?mass) " kg. Your calcuations show the mass of the system is " ?mass-check " kg."))))
 
 )
 
@@ -50,14 +58,41 @@
 	(PROP-designed (propulsion-mass# ?mass-calculated&~nil) )
 	(PROP-check (propulsion-mass# ?mass-check&~nil))
 	=>
-	(assert (recommend (correction neg) (explanation (str-cat "The propulsion mass is too big, you might be able to optimize it better. With " (round ?mass-calculated) " kg might be enough. Your actual propulsion mass is of: " ?mass-check " kg."))))
+	(assert (recommend (correction neg) (explanation (str-cat "The propulsion subsystem dry mass is too big, you might be able to optimize it better. With " (round ?mass-calculated) " kg might be enough. Your actual propulsion mass is of: " ?mass-check " kg."))))
 )
 
 (defrule mass-ok
 	(checker (mass-check ?i&:(eq ?i 0))  )
 	(PROP-designed (propulsion-mass# ?mass-calculated&~nil) )
 	=>
-	(assert (recommend (correction pos) (explanation (str-cat "The mass of the propulsion subsystem is inside the range calculated. Within an error of +/- " ?*error* " %"))))
+	(assert (recommend (correction pos) (explanation (str-cat "The dry mass of the propulsion subsystem is inside the range calculated. Within an error of +/- " ?*error* " %"))))
+)
+
+(defrule propellant-small
+	(checker (propellant-check ?i&:(eq ?i -1))  )
+
+	(PROP-designed (propellant-mass ?mass&~nil) )
+	(PROP-check (propellant-mass ?mass-check&~nil))
+
+	=>
+    (assert (recommend (correction neg) (explanation (str-cat "The propellant mass is too small. You should re-evaluate the mass. My calculations show the aproximate mass should be " (round ?mass) " kg. Your calcuations show the mass of propellant is " ?mass-check " kg."))))
+
+)
+
+(defrule propellant-big
+	(checker (propellant-check ?i&:(eq ?i 1))  )
+
+	(PROP-designed (propellant-mass ?mass-calculated&~nil) )
+	(PROP-check (propellant-mass ?mass-check&~nil))
+	=>
+	(assert (recommend (correction neg) (explanation (str-cat "The propellant mass is too big, you might be able to optimize it better. With " (round ?mass-calculated) " kg might be enough. Your actual propellant mass is of: " ?mass-check " kg."))))
+)
+
+(defrule propellant-ok
+	(checker (propellant-check ?i&:(eq ?i 0))  )
+	(PROP-designed (propellant-mass ?mass-calculated&~nil) )
+	=>
+	(assert (recommend (correction pos) (explanation (str-cat "The mass of propellant is inside the range calculated. Within an error of +/- " ?*error* " %"))))
 )
 
 (defrule dry-mass-small

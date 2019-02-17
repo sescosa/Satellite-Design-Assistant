@@ -62,6 +62,7 @@
    (slot lifetime)
    (slot satellite-dry-mass)
    (slot propellant-injection)
+   (slot propellant-mass)
    (slot propellant-ADCS)
    (slot delta-V)
    (slot propulsion-mass#)
@@ -76,7 +77,7 @@
 
 (deftemplate recommend (slot correction) (slot explanation))
 
-(deftemplate checker (slot deorbit-check) (slot mass-check) (slot dry-check) (slot active))
+(deftemplate checker (slot deorbit-check) (slot mass-check) (slot dry-check) (slot propellant-check) (slot active))
 
 (deftemplate question (slot text) (slot type) (slot ident))
 

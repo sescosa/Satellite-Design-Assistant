@@ -50,7 +50,7 @@ def findValueNumerical(doc):
 def findValueNonNumerical(doc):
     values = []
     for token in doc:
-        if token.dep_ == "attr" or token.dep_ == "acomp" or token.dep_=="nummod" or token.dep_=="pobj":
+        if token.dep_ == "attr" or token.dep_ == "acomp" or token.dep_=="nummod":
             values.append(token.text)
     return values
 
