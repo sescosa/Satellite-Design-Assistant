@@ -31,7 +31,7 @@ if Gtx_res <= 0
         massA_DL=0.05;
         linkBudgetClosed=true;
 
-    elseif (Gtx<9) && Band<3
+    elseif (Gtx<9) && Band<=3
         er=6.8;
         [W,L] = DimPatchAntenna(er,f_DL_GHz);
         AntennaType='Patch';
