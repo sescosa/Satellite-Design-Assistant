@@ -16,7 +16,7 @@ giving feedback to the user with possible improvements on the current design.
 
 3. Build the project using Gradle, Maven or an IDE (i.e. Eclipse).
 
-4. Run the *TFGApplication.class* to start the server.
+4. Run the **TfgSpringApplication.java** on **src/main/java/com/backend/** to start the server.
 
 5. Open the web interface on your localhost (http://localhost:8080/app)
 
